@@ -16,7 +16,7 @@ const Table = () => {
     }
 
     const validateDataBeforeSend = (arr: Array<ItemType>): boolean => {
-        if (!Array.isArray(arr)) {
+        if (arr.length === 0) {
             window.alert('No data to send')
             return false
         }
