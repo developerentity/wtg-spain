@@ -1,0 +1,30 @@
+{
+    "cities": [
+        {
+            "id": 1,
+            "name": "Kyiv"
+        },
+        {
+            "id": 2,
+            "name": "Lviv"
+        },
+        {
+            "id": 3,
+            "name": "Odessa"
+        }
+    ],
+    "types": [
+        {
+            "id": 1,
+            "name": "Villa"
+        },
+        {
+            "id": 2,
+            "name": "Penthouse"
+        },
+        {
+            "id": 3,
+            "name": "Apartments"
+        }
+    ]
+}
