@@ -1,6 +1,5 @@
-import { useAppDispatch } from "../redux/hooks"
-import { ItemType, addItem, changeValueOfItem, removeItem } from "../redux/slices/itemsSlice"
-import { OptionType } from "../redux/slices/selectSlice"
+import { useDispatch } from "react-redux"
+import { addItem, changeValueOfItem, removeItem } from "../redux/slices/itemsSlice"
 import Select from "./Select"
 
 const TableRow = ({
@@ -8,27 +7,22 @@ const TableRow = ({
     index,
     citiesOptions,
     typesOptions,
-}: {
-    item: ItemType,
-    index: number,
-    citiesOptions: Array<OptionType>,
-    typesOptions: Array<OptionType>,
 }) => {
 
-    const dispatch = useAppDispatch()
+    const dispatch = useDispatch()
 
-    const inputHandle = (keyId: string, keyOfTheObj: keyof ItemType, value: string) => {
+    const inputHandle = (keyId, keyOfTheObj, value) => {
         const obj = { keyId, keyOfTheObj, value }
         dispatch(changeValueOfItem(obj))
     }
 
-    const onCopyHandler = (item: ItemType) => {
+    const onCopyHandler = (item) => {
         if (item.price || item.city || item.type) {
             dispatch(addItem(item))
         }
     }
 
-    const onDelete = (keyId: string) => {
+    const onDelete = (keyId) => {
         dispatch(removeItem(keyId))
     }
 

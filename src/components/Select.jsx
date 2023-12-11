@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react";
-import { OptionType } from "../redux/slices/selectSlice";
 import 'select2/dist/css/select2.min.css';
 import 'select2';
 import $ from "jquery";
@@ -9,33 +8,31 @@ const Select = ({
     placeholder,
     value,
     onChange,
-}: {
-    options: Array<OptionType>,
-    placeholder?: string,
-    value: string,
-    onChange: (val: string) => void
 }) => {
-    const selectRef = useRef<HTMLSelectElement | null>(null);
+    const selectRef = useRef(null);
 
     useEffect(() => {
-        const $select = $(selectRef.current!);
+        const $select = $(selectRef.current);
 
-        $select.select2().on('change', (e) => {
-            onChange(e.target.value);
-        });
-
+        if ($select) {
+            $select.select2().on('change', (e) => {
+                onChange(e.target.value);
+            });
+        }
         return () => {
             $select.select2('destroy').off('change');
         };
     }, []);
 
-    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleChange = (e) => {
         onChange(e.target.value);
     };
 
     useEffect(() => {
-        const $select = $(selectRef.current!);
-        $select.val(value).trigger('change');
+        const $select = $(selectRef.current);
+        if ($select) {
+            $select.val(value).trigger('change');
+        }
     }, [value])
 
     return (

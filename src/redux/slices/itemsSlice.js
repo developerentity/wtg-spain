@@ -1,18 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-export type ItemType = {
-  keyId: string;
-  id: string;
-  price: string;
-  city: string;
-  type: string;
-};
-
-type InitialStateType = {
-  items: Array<ItemType>;
-};
-
-const initialState: InitialStateType = {
+const initialState = {
   items: [],
 };
 
@@ -20,7 +8,7 @@ const slice = createSlice({
   name: "itemsSlice",
   initialState,
   reducers: {
-    addItem(state, action: PayloadAction<ItemType | null>) {
+    addItem(state, action) {
       const newId = Math.random().toString(36).substring(2, 10);
       action.payload === null
         ? (state.items = [
@@ -36,32 +24,19 @@ const slice = createSlice({
             ...state.items.concat({ ...action.payload, id: "", keyId: newId }),
           ]);
     },
-    changeValueOfItem(
-      state,
-      action: PayloadAction<{
-        keyOfTheObj: keyof ItemType;
-        keyId: string;
-        value: ItemType[keyof ItemType];
-      }>
-    ) {
+    changeValueOfItem(state, action) {
       const idToReplace = action.payload.keyId;
       state.items = state.items.map((obj) => {
         if (obj.keyId === idToReplace) {
           return {
             ...obj,
             [action.payload.keyOfTheObj]: action.payload.value,
-          } as ItemType;
+          };
         }
         return obj;
       });
     },
-    changeAllValuesOfItemsWithThisKey(
-      state,
-      action: PayloadAction<{
-        keyOfTheObj: keyof ItemType;
-        value: ItemType[keyof ItemType];
-      }>
-    ) {
+    changeAllValuesOfItemsWithThisKey(state, action) {
       const { keyOfTheObj, value } = action.payload;
       state.items = [
         ...state.items.map((obj) => ({
@@ -70,7 +45,7 @@ const slice = createSlice({
         })),
       ];
     },
-    removeItem(state, action: PayloadAction<string>) {
+    removeItem(state, action) {
       state.items = [
         ...state.items.filter((item) => item.keyId !== action.payload),
       ];

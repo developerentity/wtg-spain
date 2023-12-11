@@ -1,22 +1,7 @@
-import {
-  Action,
-  PayloadAction,
-  ThunkAction,
-  createSlice,
-} from "@reduxjs/toolkit";
-import { RootState } from "../store";
+import { createSlice } from "@reduxjs/toolkit";
 import { fetchCities, fetchTypes } from "../../api/api";
 
-export type OptionType = {
-  id: string;
-  name: string;
-};
-interface IInitialState {
-  citiesOptions: Array<OptionType>;
-  typesOptions: Array<OptionType>;
-}
-
-const initialState: IInitialState = {
+const initialState = {
   citiesOptions: [],
   typesOptions: [],
 };
@@ -25,23 +10,16 @@ const slice = createSlice({
   name: "selectSlice",
   initialState,
   reducers: {
-    setCitiesOptions(state, action: PayloadAction<Array<OptionType>>) {
+    setCitiesOptions(state, action) {
       state.citiesOptions = [...action.payload];
     },
-    setTypesOptions(state, action: PayloadAction<Array<OptionType>>) {
+    setTypesOptions(state, action) {
       state.typesOptions = [...action.payload];
     },
   },
 });
 
-type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;
-
-export const getCitiesOptions = (): AppThunk<void> => {
+export const getCitiesOptions = () => {
   return async (dispatch) => {
     try {
       const data = await fetchCities();
@@ -54,7 +32,7 @@ export const getCitiesOptions = (): AppThunk<void> => {
   };
 };
 
-export const getTypesOptions = (): AppThunk<void> => {
+export const getTypesOptions = () => {
   return async (dispatch) => {
     try {
       const data = await fetchTypes();

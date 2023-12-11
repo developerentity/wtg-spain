@@ -1,19 +1,15 @@
 import { useEffect, useState } from "react"
-import { useAppDispatch } from "../redux/hooks"
-import { OptionType } from "../redux/slices/selectSlice"
 import Select from "./Select"
 import { changeAllValuesOfItemsWithThisKey } from "../redux/slices/itemsSlice"
+import { useDispatch } from "react-redux"
 
 
 const TableColumnRedactorRow = ({
     citiesOptions,
     typesOptions
-}: {
-    citiesOptions: Array<OptionType>,
-    typesOptions: Array<OptionType>,
 }) => {
 
-    const dispatch = useAppDispatch()
+    const dispatch = useDispatch()
 
     const [price, setPrice] = useState('')
     const [city, setCity] = useState('')
@@ -41,7 +37,7 @@ const TableColumnRedactorRow = ({
         setType('')
     }, [dispatch, type])
 
-    const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
             onPriceChangeHandler()
         }

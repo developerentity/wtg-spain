@@ -1,27 +1,28 @@
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { ItemType, addItem, clearList } from "../redux/slices/itemsSlice";
+import { addItem, clearList } from "../redux/slices/itemsSlice";
 import { getCitiesOptions, getTypesOptions } from "../redux/slices/selectSlice";
 import TableColumnRedactorRow from "./TableColumnRedactorRow";
 import TableRow from "./TableRow";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Table = () => {
 
-    const dispatch = useAppDispatch()
-    const items = useAppSelector(state => state.itemsSlice.items)
-    const { citiesOptions, typesOptions } = useAppSelector(state => state.selectSlice)
+    const dispatch = useDispatch()
+    const items = useSelector(state => state.itemsSlice.items)
+    const { citiesOptions, typesOptions } = useSelector(state => state.selectSlice)
 
     const onAddNewItemHandle = () => {
         dispatch(addItem(null))
     }
 
-    const validateDataBeforeSend = (arr: Array<ItemType>): boolean => {
+    const validateDataBeforeSend = (arr) => {
         if (arr.length === 0) {
             window.alert('No data to send')
             return false
         }
 
-        const idSet = new Set<string>();
+        const idSet = new Set();
 
         for (const obj of arr) {
             if (!obj.id) {
